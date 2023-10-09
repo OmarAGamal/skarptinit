@@ -1,0 +1,5 @@
+{
+    "domain": "skarpt_service",
+    "name": "Skarpt Service",
+    "iot_class": "local_push"
+}
