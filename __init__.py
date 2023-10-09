@@ -1,25 +1,24 @@
 from influxdb import InfluxDBClient
-import influxdb_client
-from influxdb_client.client.write_api import SYNCHRONOUS
+from datetime import datetime
 
-client = InfluxDBClient(host='localhost', port=8086)
-#client.create_database('skarpt')
-json_body = [
-    {
-        "measurement": "Tzone",
-        "tags": {
-            "host": "192.168.100.144",
-            "region": "egpyt"
-        },
-        "fields": {
-            "Float_value": 525.25,
-            "Int_value": 525,
-            "String_value": "startvalue",
-            "Bool_value": True
-        }
-    }
-]
+client = InfluxDBClient('192.168.100.144',8086,'skarpt','skarpt','skarpt')
+client.create_database('test')
+#client.get_list_database()
 
-client.write_points(json_body)
-result = client.query('select * from Tzone')
-print("Result: {0}".format(result))
+json_payload = []
+data={
+       "measurement":"Tzone",
+       "tags":{
+               "sensor":"88880000"
+       },
+       "time": datetime.now(),
+       "fields":{
+            'value':252
+       }
+}
+
+json_payload.append(data)
+
+client.write_points(json_payload)
+result= client.query('select * from Tzone;')
+print("res=",result)
